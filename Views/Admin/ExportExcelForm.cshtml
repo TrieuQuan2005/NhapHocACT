@@ -1,0 +1,102 @@
+﻿@model hehehe.Models.ViewModels.ExportOptionsViewModel
+@{
+Layout = "_layout";
+ViewData["Title"] = "Xuất Excel";
+var MaDangNhap = ViewBag.MaDangNhap;
+}
+
+<style>
+    .export-container {
+        width: 40%;
+        min-width: 360px;
+        margin: 40px auto;
+        background-color: #fff;
+        padding: 30px 40px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        text-align: center;
+    }
+
+    .export-container h2 {
+        margin-bottom: 25px;
+        color: #2c3e50;
+    }
+
+    .export-container label {
+        font-weight: bold;
+        margin-bottom: 10px;
+        display: block;
+        color: #333;
+        text-align: left;
+    }
+
+    .export-container select {
+        width: 100%;
+        padding: 10px 12px;
+        font-size: 16px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        margin-bottom: 20px;
+        box-sizing: border-box;
+    }
+
+    .export-container button {
+        background-color: #27ae60;
+        color: white;
+        font-size: 16px;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .export-container button:hover {
+        background-color: #219150;
+    }
+</style>
+
+<div class="export-container">
+    <h2>📥 Xuất danh sách sinh viên</h2>
+
+    <form asp-action="ExportToExcel" method="post">
+        @Html.AntiForgeryToken()
+        
+        <label for="SelectedNganh">Chọn ngành đào tạo:</label>
+        @if (MaDangNhap == "ADMINISTRATOR")
+        {
+            <select name="SelectedNganh" id="SelectedNganh" required>
+                @foreach (var nganh in Model.AvailableNganhs)
+                {
+                    <option value="@nganh">@nganh</option>
+                }
+            </select>
+        }
+        else if (MaDangNhap == "ADMINATPB")
+        {
+            <select name="SelectedNganh" id="SelectedNganh" required>
+                <option value="ATPB">An Toàn Thông Tin Phía Bắc</option>
+            </select>
+        }
+        else if (MaDangNhap == "ADMINATPN")
+        {
+            <select name="SelectedNganh" id="SelectedNganh" required>
+                <option value="ATPN">An Toàn Thông Tin Phía Nam</option>
+            </select>
+        }
+        else if (MaDangNhap == "ADMINCNTT")
+        {
+            <select name="SelectedNganh" id="SelectedNganh" required>
+                <option value="CNTT">Công Nghệ Thông Tin</option>
+            </select>
+        }
+        else if (MaDangNhap == "ADMINDTVT")
+        {
+            <select name="SelectedNganh" id="SelectedNganh" required>
+                <option value="DTVT">Điện Tử Viễn Thông</option>
+            </select>
+        }
+        
+        <button type="submit">Xuất Excel</button>
+    </form>
+</div>

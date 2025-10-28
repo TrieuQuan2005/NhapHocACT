@@ -1,0 +1,136 @@
+﻿@{
+    ViewData["Title"] = "Welcome";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Welcome</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: #fff;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 32px;
+        }
+
+        .welcome-section, .terms-section {
+            background-color: #ffe5e5;
+            padding: 32px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #b30000;
+            margin-bottom: 16px;
+        }
+
+        p {
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #b30000;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .btn:disabled {
+            background-color: #aaa;
+            cursor: not-allowed;
+        }
+
+        .terms-section {
+            display: none;
+        }
+
+        ul {
+            margin-top: 10px;
+            padding-left: 20px;
+        }
+
+        .checkbox {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+@{
+    var user = ViewBag.user;
+}
+<body>
+<div class="container">
+    <!-- PHẦN CHÀO MỪNG -->
+    <div class="welcome-section" id="welcomeSection">
+        <h1>Chào mừng @user.HoTen đã trúng tuyển vào ngành @user.NganhDaoTao - Học viện Kỹ thuật mật mã</h1>
+        <p>Chào mừng bạn đến với chuyên trang nhập học trực tuyến của Học viện.</p>
+        <p>Hệ thống nhập học trực tuyến sẽ bắt đầu từ ngày 08h00 ngày 27/08/2025 đến trước 24h00 ngày 08/09/2025.</p>
+        <button class="btn" onclick="showTerms()">Tiếp tục</button>
+    </div>
+
+    <!-- PHẦN ĐIỀU KHOẢN -->
+    <div class="terms-section" id="termsSection">
+        <h2>Điều khoản & Hướng dẫn sử dụng</h2>
+        <ul>
+            <li>Khi nhập thông tin, thí sinh kiểm tra các trường thông tin điền sẵn, nếu có sai sót hãy gửi yêu cầu đính chính và điền vào các trường thông tin còn thiếu,
+                thí sinh phải điền đầy đủ các thông tin theo yêu cầu và đảm bảo chính xác trước khi lưu thông tin.</li>
+            <li>Thí sinh phải điền đầy đủ thông tin vào các trường bắt buộc và nộp đủ học phí mới lưu thông tin được </li>
+            <li>Hồ sơ thí sinh phải được Hội đồng tuyển sinh của Học viện phê duyệt thì mới coi là nhập học thành công.
+                Thông thường hồ sơ thí sinh sẽ được phê duyêt trong vòng 03 ngày (Không kể ngày nghỉ, ngày lễ).
+                Để kiểm tra, thí sinh theo dõi tình trạng hồ sơ thông qua hệ thống và Email</li>
+            <li>Các file hồ sơ được upload là ảnh chụp hoặc scan ngay ngắn rõ ràng từ bản gốc và phải đúng theo yêu cầu định dạng là file pdf hoặc file ảnh (jpg, png)</li>
+            <li>Không được chia sẻ thông tin tài khoản của bạn với người khác. Thí sinh phải đổi mật khẩu sau lần đăng nhập đầu tiên</li>
+            <li>Luôn theo dõi thông báo từ học viện thông qua các fanpage Facebook và Email của bạn</li>
+            <li>Thông tin của bạn được sử dụng cho các hoạt động quản lý người học của Học viện. 
+                Thông tin này sẽ được bảo mật và không chia sẻ bất kỳ nội dung nào cho bên thứ 3</li>
+        </ul>
+
+        <div class="checkbox">
+            <input type="checkbox" id="agreeCheckbox" onchange="toggleStart()" />
+            <label for="agreeCheckbox">Tôi đã đọc và đồng ý với các điều khoản trên</label>
+        </div>
+
+        <button class="btn" id="startBtn" onclick="start()" disabled>Bắt đầu</button>
+    </div>
+</div>
+
+<script>
+    function showTerms() {
+        document.getElementById("welcomeSection").style.display = "none";
+        document.getElementById("termsSection").style.display = "block";
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function toggleStart() {
+        const check = document.getElementById("agreeCheckbox").checked;
+        document.getElementById("startBtn").disabled = !check;
+    }
+
+    function start() {
+        window.location.href = "/Form/FormNhapThongTin";
+    }
+</script>
+</body>
+</html>

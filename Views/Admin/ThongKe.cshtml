@@ -1,0 +1,135 @@
+﻿@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Trang thống kê";
+
+    var stats = ViewBag.Stats;
+    var MaNhapHoc = ViewBag.MaNhapHoc;
+}
+
+<style>
+    .stats-container {
+        width: 80%;
+        height: 60vh;
+        margin: 40px auto;
+        background-color: #fdfdfd;
+        border: 2px solid #ccc;
+        border-radius: 12px;
+        padding: 30px 40px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .stats-container h4 {
+        font-weight: bold;
+        margin-bottom: 25px;
+        color: #2c3e50;
+    }
+
+    .stats-container ul {
+        font-size: 18px;
+        line-height: 2;
+        padding-left: 20px;
+    }
+
+    .stats-container li {
+        margin-bottom: 8px;
+    }
+</style>
+
+<div class="stats-container">
+    <h4>📊 <strong>Thống kê tổng quan hệ thống</strong></h4>
+    @if (MaNhapHoc == "ADMINISTRATOR")
+    {
+        int totalUsers = stats?.TotalUser ?? 0;
+        int totalForms = stats?.TotalForm ?? 0;
+        
+        int atpbCount = stats?.ATPB?.total ?? 0;
+        int atpnCount = stats?.ATPN?.total ?? 0;
+        int ctCount = stats?.CT?.total ?? 0;
+        int dtCount = stats?.DT?.total ?? 0;
+
+        double atpbPercent = stats?.ATPB?.percent ?? 0;
+        double atpnPercent = stats?.ATPN?.percent ?? 0;
+        double ctPercent = stats?.CT?.percent ?? 0;
+        double dtPercent = stats?.DT?.percent ?? 0;
+
+        int atpbCurrent = stats?.ATPB?.current ?? 0;
+        int atpnCurrent = stats?.ATPN?.current ?? 0;
+        int ctCurrent = stats?.CT?.current ?? 0;
+        int dtCurrent = stats?.DT?.current ?? 0;
+
+        int atpbLocked = stats?.ATPB?.locked;
+        int atpnLocked = stats?.ATPN?.locked;
+        int cnttLocked = stats?.CT?.locked;
+        int dtvtLocked = stats?.DT?.locked;
+        
+        <ul>
+            <li><strong>Tổng tài khoản:</strong> @totalUsers</li>
+            <li><strong>Số sinh viên đã nhập học:</strong> @totalForms sinh viên</li>
+            <li><strong>An toàn thông tin (Phia Bắc):</strong> @atpbCurrent / @atpbCount (@atpbPercent%) |  Đã duyệt: @atpbLocked </li>
+            <li><strong>An toàn thông tin (Phía Nam):</strong> @atpnCurrent / @atpnCount (@atpnPercent%) |  Đã duyệt: @atpnLocked</li>
+            <li><strong>Công nghệ thông tin:</strong> @ctCurrent / @ctCount (@ctPercent%) |  Đã duyệt: @cnttLocked</li>
+            <li><strong>Điện tử vi mạch:</strong> @dtCurrent / @dtCount (@dtPercent%) |  Đã duyệt: @dtvtLocked</li>
+        </ul>
+    }
+    else if (MaNhapHoc == "ADMINATPB")
+    {
+        int atpbCount = stats?.ATPB?.total ?? 0;
+        double atpbPercent = stats?.ATPB?.percent ?? 0;
+        int atpbCurrent = stats?.ATPB?.current ?? 0;
+        int atpbLocked = stats?.ATPB?.locked;
+
+        <ul>
+            <div>Khoa An Toàn Thông Tin (Phía Bắc)</div>
+            <li><strong>Tổng tài khoản sinh viên:</strong> @atpbCount</li>
+            <li><strong>Số sinh viên đã nhập học:</strong> @atpbCurrent (@atpbPercent %)</li>
+            <li><strong>Đã Duyệt:</strong> @atpbLocked </li>
+            <li><strong>Còn lại:</strong> @(atpbCount - atpbCurrent)</li>
+        </ul>
+    }
+    else if (MaNhapHoc == "ADMINATPN")
+    {
+        int atpnCount = stats?.ATPN?.total ?? 0;
+        double atpnPercent = stats?.ATPN?.percent ?? 0;
+        int atpnCurrent = stats?.ATPN?.current ?? 0;
+        int atpnLocked = stats?.ATPN?.locked;
+
+        <ul>
+            <div>Khoa An Toàn Thông Tin (Phía Nam)</div>
+            <li><strong>Tổng tài khoản sinh viên:</strong> @atpnCount</li>
+            <li><strong>Số sinh viên đã nhập học:</strong> @atpnCurrent (@atpnPercent %)</li>
+            <li><strong>Đã Duyệt:</strong> @atpnLocked </li>
+            <li><strong>Còn lại:</strong> @(atpnCount - atpnCurrent)</li>
+        </ul>
+    }
+    else if (MaNhapHoc == "ADMINCNTT")
+    {
+        int ctCount = stats?.CT?.total ?? 0;
+        double ctPercent = stats?.CT?.percent ?? 0;
+        int ctCurrent = stats?.CT?.current ?? 0;
+        int cnttLocked = stats?.CT?.locked;
+
+        <ul>
+            <div>Khoa Công Nghệ Thông Tin</div>
+            <li><strong>Tổng tài khoản sinh viên:</strong> @ctCount</li>
+            <li><strong>Số sinh viên đã nhập học:</strong> @ctCurrent (@ctPercent %)</li>
+            <li><strong>Đã Duyệt:</strong> @cnttLocked </li>
+            <li><strong>Còn lại:</strong> @(ctCount - ctCurrent)</li>
+        </ul>
+    }
+    else if (MaNhapHoc == "ADMINDTVT")
+    {
+        int dtCount = stats?.DT?.total ?? 0;
+        double dtPercent = stats?.DT?.percent ?? 0;
+        int dtCurrent = stats?.DT?.current ?? 0;
+        int dtvtLocked = stats?.DT?.locked;
+
+        <ul>
+            <div>Điện tử viễn thông</div>
+            <li><strong>Tổng tài khoản sinh viên:</strong> @dtCount</li>
+            <li><strong>Số sinh viên đã nhập học:</strong> @dtCurrent (@dtPercent %)</li>
+            <li><strong>Đã Duyệt:</strong> @dtvtLocked </li>
+            <li><strong>Còn lại:</strong> @(dtCount - dtCurrent)</li>
+        </ul>
+    }
+    
+</div>

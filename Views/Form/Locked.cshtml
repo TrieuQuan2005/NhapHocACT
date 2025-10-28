@@ -1,0 +1,151 @@
+﻿@model hehehe.Models.UserForm
+@{
+    ViewData["Title"] = "Thông tin đã nộp";
+    Layout = null;
+}
+<title>Thông tin sinh viên (Đã duyệt)</title>
+<style>
+    body {
+        font-family: 'Segoe UI', sans-serif;
+        background: #f7f9fc;
+        padding: 0;
+        margin: 0;
+    }
+
+    .container {
+        max-width: 1000px;
+        margin: 30px auto;
+        background: white;
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 30px;
+        color: #e74c3c;
+    }
+
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+        margin-bottom: 15px;
+    }
+
+    .item {
+        width: 50%;
+        padding: 8px 12px;
+        box-sizing: border-box;
+        display: flex;
+    }
+
+    .item label {
+        font-weight: bold;
+        width: 150px;
+        color: #555;
+    }
+
+    .item .value {
+        flex: 1;
+        color: #222;
+    }
+
+    .section-title {
+        font-weight: bold;
+        font-size: 18px;
+        margin: 20px 0 10px;
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 5px;
+    }
+
+    .files img {
+        max-width: 200px;
+        max-height: 200px;
+        margin: 5px;
+        border-radius: 4px;
+        object-fit: contain;
+        border: 1px solid #ccc;
+    }
+
+    .files a {
+        display: inline-block;
+        margin: 4px 8px 4px 0;
+        text-decoration: underline;
+        color: #2980b9;
+    }
+
+    .note {
+        margin-top: 20px;
+        font-style: italic;
+        color: #c0392b;
+        text-align: center;
+    }
+    
+</style>
+
+<div class="container">
+    <h2>🔒 Thông tin đã nộp</h2>
+
+    <div class="row">
+        <div class="item"><label>Họ tên:</label><div class="value">@Model.HoTen</div></div>
+        <div class="item"><label>Số CCCD:</label><div class="value">@Model.Cccd</div></div>
+        <div class="item"><label>Ngày sinh:</label><div class="value">@Model.NgaySinh.ToString("dd/MM/yyyy")</div></div>
+        <div class="item"><label>Giới tính:</label><div class="value">@Model.GioiTinh</div></div>
+        <div class="item"><label>Nơi sinh:</label><div class="value">@Model.NoiSinh</div></div>
+        <div class="item"><label>Dân tộc:</label><div class="value">@Model.DanToc</div></div>
+        <div class="item"><label>Thường trú:</label><div class="value">@Model.NoiThuongTru</div></div>
+        <div class="item"><label>Chỗ ở hiện nay:</label><div class="value">@Model.ChoOHienNay</div></div>
+        <div class="item"><label>Đối tượng ưu tiên:</label><div class="value">@(Model.DoiTuongUuTien ? "Có" : "Không")</div></div>
+        <div class="item"><label>Khu vực:</label><div class="value">@Model.KhuVuc</div></div>
+        <div class="item"><label>Năm nhập học:</label><div class="value">@Model.NamNhapHoc</div></div>
+        <div class="item"><label>Tốt nghiệp THPT:</label><div class="value">@Model.NamTotNghiepTHPT</div></div>
+        <div class="item"><label>Năm nhập ngũ:</label><div class="value">@Model.NamNhapNgu</div></div>
+        <div class="item"><label>Năm xuất ngũ:</label><div class="value">@Model.NamXuatNgu</div></div>
+        <div class="item"><label>Ngày vào Đoàn:</label><div class="value">@Model.NgayVaoDoan.ToString("dd/MM/yyyy")</div></div>
+        <div class="item"><label>Ngày vào Đảng:</label><div class="value">@Model.NgayVaoDang?.ToString("dd/MM/yyyy")</div></div>
+        <div class="item"><label>Ngành học:</label><div class="value">@Model.NganhDaoTao</div></div>
+        <div class="item"><label>Số điện thoại:</label><div class="value">@Model.SoDienThoai</div></div>
+        <div class="item"><label>Email:</label><div class="value">@Model.Email</div></div>
+    </div>
+
+    <div class="section-title">👪 Thông tin gia đình</div>
+    <div class="row">
+        <div class="item"><label>Họ tên bố:</label><div class="value">@Model.HoTenBo</div></div>
+        <div class="item"><label>Năm sinh bố:</label><div class="value">@Model.NamSinhBo</div></div>
+        <div class="item"><label>Nghề nghiệp bố:</label><div class="value">@Model.NgheNghiepBo</div></div>
+        <div class="item"><label>SDT bố:</label><div class="value">@Model.SoDienThoaiBo</div></div>
+        <div class="item"><label>Họ tên mẹ:</label><div class="value">@Model.HoTenMe</div></div>
+        <div class="item"><label>Năm sinh mẹ:</label><div class="value">@Model.NamSinhMe</div></div>
+        <div class="item"><label>Nghề nghiệp mẹ:</label><div class="value">@Model.NgheNghiepMe</div></div>
+        <div class="item"><label>SDT mẹ:</label><div class="value">@Model.SoDienThoaiMe</div></div>
+        <div class="item"><label>Báo tin cho:</label><div class="value">@Model.BaoTinChoAi</div></div>
+        <div class="item"><label>Địa chỉ liên hệ:</label><div class="value">@Model.DiaChiLienHe</div></div>
+    </div>
+
+    <div class="section-title">📎 File đính kèm</div>
+    <div class="files">
+        @{
+            var fileList = ViewBag.FileList as List<hehehe.Models.User_UploadFile>;
+        }
+
+        @if (fileList != null && fileList.Any())
+        {
+            foreach (var f in fileList)
+            {
+                <div>
+                    📎 <strong>@f.FileType:</strong>
+                    <a href="@f.FilePath" target="_blank">@System.IO.Path.GetFileName(f.FilePath)</a>
+                </div>
+            }
+        }
+        else
+        {
+            <i>Không có file nào được đính kèm.</i>
+        }
+
+    </div>
+    
+    <p class="note">Lưu ý: Thông tin đã nộp và không thể chỉnh sửa.</p>
+    
+</div>

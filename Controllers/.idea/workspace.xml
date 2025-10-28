@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="ceec3c90-cd90-476b-8833-d39690ed6c7d" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/AdminController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AdminController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AuthController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AuthController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FormController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FormController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Data/ApplicationDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Data/ApplicationDbContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Data/ApplicationDbContextFactory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Data/ApplicationDbContextFactory.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Middlewares/AuthMiddleware.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Middlewares/AuthMiddleware.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Models/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Models/User.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Models/UserForm.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Models/UserForm.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Views/Admin/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../Views/Admin/Index.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Views/Admin/_FormTable.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../Views/Admin/_FormTable.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Views/Auth/Login.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../Views/Auth/Login.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Views/Form/FormNhapThongTin.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../Views/Form/FormNhapThongTin.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Views/Form/XemThongTin.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../Views/Form/XemThongTin.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/../appsettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../bin/Debug/net9.0/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/../bin/Debug/net9.0/appsettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../bin/Debug/net9.0/hehehe.deps.json" beforeDir="false" afterPath="$PROJECT_DIR$/../bin/Debug/net9.0/hehehe.deps.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../bin/Debug/net9.0/hehehe.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../bin/Debug/net9.0/hehehe.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../bin/Debug/net9.0/hehehe.exe" beforeDir="false" afterPath="$PROJECT_DIR$/../bin/Debug/net9.0/hehehe.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../bin/Debug/net9.0/hehehe.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/../bin/Debug/net9.0/hehehe.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../bin/Debug/net9.0/hehehe.runtimeconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/../bin/Debug/net9.0/hehehe.runtimeconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../bin/Debug/net9.0/hehehe.staticwebassets.endpoints.json" beforeDir="false" afterPath="$PROJECT_DIR$/../bin/Debug/net9.0/hehehe.staticwebassets.endpoints.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../bin/Debug/net9.0/hehehe.staticwebassets.runtime.json" beforeDir="false" afterPath="$PROJECT_DIR$/../bin/Debug/net9.0/hehehe.staticwebassets.runtime.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hehehe.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../hehehe.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../obj/Debug/net9.0/apphost.exe" beforeDir="false" afterPath="$PROJECT_DIR$/../obj/Debug/net9.0/apphost.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../obj/Debug/net9.0/hehehe.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../obj/Debug/net9.0/hehehe.AssemblyInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../obj/Debug/net9.0/hehehe.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../obj/Debug/net9.0/hehehe.AssemblyInfoInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../obj/Debug/net9.0/hehehe.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" afterPath="$PROJECT_DIR$/../obj/Debug/net9.0/hehehe.GeneratedMSBuildEditorConfig.editorconfig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../obj/Debug/net9.0/hehehe.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../obj/Debug/net9.0/hehehe.assets.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../obj/Debug/net9.0/hehehe.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../obj/Debug/net9.0/hehehe.csproj.CoreCompileInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../obj/Debug/net9.0/hehehe.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../obj/Debug/net9.0/hehehe.csproj.FileListAbsolute.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../obj/Debug/net9.0/hehehe.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../obj/Debug/net9.0/hehehe.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../obj/Debug/net9.0/hehehe.genruntimeconfig.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../obj/Debug/net9.0/hehehe.genruntimeconfig.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../obj/Debug/net9.0/hehehe.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/../obj/Debug/net9.0/hehehe.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../obj/Debug/net9.0/hehehe.sourcelink.json" beforeDir="false" afterPath="$PROJECT_DIR$/../obj/Debug/net9.0/hehehe.sourcelink.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../obj/Debug/net9.0/ref/hehehe.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../obj/Debug/net9.0/ref/hehehe.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../obj/Debug/net9.0/refint/hehehe.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../obj/Debug/net9.0/refint/hehehe.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../obj/Debug/net9.0/staticwebassets.build.endpoints.json" beforeDir="false" afterPath="$PROJECT_DIR$/../obj/Debug/net9.0/staticwebassets.build.endpoints.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../obj/Debug/net9.0/staticwebassets.build.json" beforeDir="false" afterPath="$PROJECT_DIR$/../obj/Debug/net9.0/staticwebassets.build.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../obj/Debug/net9.0/staticwebassets.development.json" beforeDir="false" afterPath="$PROJECT_DIR$/../obj/Debug/net9.0/staticwebassets.development.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../obj/Debug/net9.0/staticwebassets.pack.json" beforeDir="false" afterPath="$PROJECT_DIR$/../obj/Debug/net9.0/staticwebassets.pack.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../obj/Debug/net9.0/staticwebassets/msbuild.hehehe.Microsoft.AspNetCore.StaticWebAssetEndpoints.props" beforeDir="false" afterPath="$PROJECT_DIR$/../obj/Debug/net9.0/staticwebassets/msbuild.hehehe.Microsoft.AspNetCore.StaticWebAssetEndpoints.props" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../obj/Debug/net9.0/staticwebassets/msbuild.hehehe.Microsoft.AspNetCore.StaticWebAssets.props" beforeDir="false" afterPath="$PROJECT_DIR$/../obj/Debug/net9.0/staticwebassets/msbuild.hehehe.Microsoft.AspNetCore.StaticWebAssets.props" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../obj/hehehe.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/../obj/hehehe.csproj.nuget.dgspec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../obj/hehehe.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/../obj/hehehe.csproj.nuget.g.props" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../obj/hehehe.csproj.nuget.g.targets" beforeDir="false" afterPath="$PROJECT_DIR$/../obj/hehehe.csproj.nuget.g.targets" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/../obj/project.assets.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../obj/project.nuget.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/../obj/project.packagespec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../obj/rider.project.model.nuget.info" beforeDir="false" afterPath="$PROJECT_DIR$/../obj/rider.project.model.nuget.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/../obj/rider.project.restore.info" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 3
+}]]></component>
+  <component name="ProjectId" id="2yWmbOf1nNjcEgVpR6qv5vBwwMv" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ceec3c90-cd90-476b-8833-d39690ed6c7d" name="Changes" comment="" />
+      <created>1749958775089</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1749958775089</updated>
+      <workItem from="1749958777726" duration="7000" />
+    </task>
+    <servers />
+  </component>
+  <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
+  <component name="VcsManagerConfiguration">
+    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+</project>

@@ -1,0 +1,270 @@
+﻿@{
+    ViewData["Title"] = "Tách PDF";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!doctype html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"]</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/pdf-lib/dist/pdf-lib.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jszip/dist/jszip.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/file-saver/dist/FileSaver.min.js"></script>
+
+    <style>
+        :root {
+            --main-red: #d51c24;
+            --dark-red: #a50f18;
+            --green: #16a34a;
+            --green-dark: #0f6a30;
+            --gray-bg: #f8f8f8;
+            --text: #1e293b;
+        }
+
+        body {
+            font-family: "Segoe UI", "Inter", sans-serif;
+            background: linear-gradient(180deg, #f87171 0%, #fde0e0 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 60px 16px;
+        }
+
+        .container {
+            background: #fff;
+            width: 100%;
+            max-width: 460px;
+            padding: 32px 28px;
+            border-radius: 20px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            color:red;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        label {
+            display: block;
+            font-weight: 500;
+            font-size: 0.95rem;
+            margin-bottom: 6px;
+        }
+
+        input[type="file"],
+        input[type="text"] {
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 10px;
+            border: 1px solid #cbd5e1;
+            font-size: 0.95rem;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        input[type="text"]:focus {
+            border-color:red;
+            box-shadow: 0 0 0 3px rgba(213, 28, 36, 0.15);
+        }
+
+        input[type="file"]::file-selector-button {
+            margin-right: 12px;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 8px;
+            background-color:red;
+            color: white;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.2s ease;
+        }
+
+        input[type="file"]::file-selector-button:hover {
+            background-color:red;
+        }
+
+        .checkbox {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .checkbox input {
+            width: 16px;
+            height: 16px;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        button {
+            flex: 1;
+            padding: 11px 0;
+            border: none;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.25s ease, transform 0.1s ease;
+        }
+
+        button:hover {
+            transform: translateY(-1px);
+        }
+
+        #splitBtn {
+            background-color:red;
+        }
+
+        #splitBtn:hover {
+            background-color:red;
+        }
+
+        #printBtn {
+            background-color:green;
+        }
+
+        #printBtn:hover {
+            background-color:green;
+        }
+
+        #status {
+            font-size: 0.9rem;
+            margin-top: 16px;
+            color: #475569;
+            text-align: center;
+        }
+
+        #fileInfo {
+            font-size: 0.85rem;
+            color: #64748b;
+            margin-top: 4px;
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .container {
+                padding: 24px 20px;
+                border-radius: 16px;
+            }
+            h1 { font-size: 1.6rem; }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>PDF Splitter</h1>
+
+        <div>
+            <label>Chọn file PDF</label>
+            <input id="fileInput" type="file" accept="application/pdf" />
+            <p id="fileInfo">Chưa chọn file.</p>
+        </div>
+
+        <div style="margin-top: 16px;">
+            <label>Tiền tố tên file</label>
+            <input id="prefix" type="text" placeholder="vd: Tailieu" />
+        </div>
+
+        <div class="checkbox">
+            <input id="reverse" type="checkbox" />
+            <label for="reverse">Đảo ngược số thứ tự</label>
+        </div>
+
+        <div class="btn-group">
+            <button id="splitBtn">Tách & Tải ZIP</button>
+            <button id="printBtn">In PDF</button>
+        </div>
+
+        <div id="status"></div>
+    </div>
+
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const fileInfo = document.getElementById('fileInfo');
+        const prefixEl = document.getElementById('prefix');
+        const reverseEl = document.getElementById('reverse');
+        const splitBtn = document.getElementById('splitBtn');
+        const printBtn = document.getElementById('printBtn');
+        const statusEl = document.getElementById('status');
+
+        let pdfArrayBuffer = null;
+        let pdfName = "output";
+
+        fileInput.addEventListener("change", async (e) => {
+            const file = e.target.files?.[0];
+            if (!file) { fileInfo.textContent = "Chưa chọn file."; pdfArrayBuffer = null; return; }
+            pdfName = (file.name || "output").replace(/\.pdf$/i, "");
+            fileInfo.textContent = `Đã chọn: ${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)`;
+            prefixEl.value = prefixEl.value || pdfName;
+            pdfArrayBuffer = await file.arrayBuffer();
+        });
+
+        function setStatus(msg) { statusEl.textContent = msg; }
+
+        splitBtn.addEventListener("click", async () => {
+            if (!pdfArrayBuffer) { alert("Hãy chọn file PDF trước."); return; }
+
+            try {
+                const srcPdf = await PDFLib.PDFDocument.load(pdfArrayBuffer);
+                const total = srcPdf.getPageCount();
+                setStatus(`Tổng số trang: ${total}. Bắt đầu tách...`);
+
+                let pages = Array.from({ length: total }, (_, i) => i);
+                if (reverseEl.checked) pages.reverse();
+
+                const zip = new JSZip();
+                const prefix = (prefixEl.value || pdfName).trim();
+
+                for (let idx = 0; idx < pages.length; idx++) {
+                    const newPdf = await PDFLib.PDFDocument.create();
+                    const [page] = await newPdf.copyPages(srcPdf, [pages[idx]]);
+                    newPdf.addPage(page);
+                    const bytes = await newPdf.save();
+
+                    const num = (idx + 1).toString().padStart(4, "0");
+                    const fname = `${prefix}${num}.pdf`;
+                    zip.file(fname, bytes);
+                }
+
+                const blob = await zip.generateAsync({ type: "blob" });
+                saveAs(blob, `${prefix}_split_pages.zip`);
+                setStatus("Hoàn tất! ZIP đã được tải xuống.");
+            } catch (err) {
+                console.error(err);
+                alert("Có lỗi xảy ra khi xử lý PDF.");
+            }
+        });
+
+        printBtn.addEventListener("click", async () => {
+            if (!pdfArrayBuffer) { alert("Hãy chọn file PDF trước."); return; }
+
+            const blob = new Blob([pdfArrayBuffer], { type: "application/pdf" });
+            const url = URL.createObjectURL(blob);
+            const win = window.open(url);
+            if (win) win.print();
+        });
+    </script>
+</body>
+</html>

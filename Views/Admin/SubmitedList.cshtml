@@ -1,0 +1,198 @@
+﻿@{
+    Layout = "_layout";
+    ViewData["Title"] = "Trang quản trị";
+
+    var list = ViewBag.List as List<hehehe.Models.UserForm>;
+    var nganh = ViewBag.nganh as string ?? "";
+    var maNhapHoc = ViewBag.MaNhapHocFilter as string ?? "";
+    var maDangNhap = ViewBag.MaDangNhap;
+    var lockstatus = ViewBag.LockStatus;
+}
+
+<style>
+    .list-container {
+        width: 80%;
+        height: 60vh;
+        margin: 40px auto;
+        background-color: #ffffff;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        padding: 20px 30px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        overflow: auto;
+    }
+
+    .filter-form {
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    .filter-form select,
+    .filter-form input,
+    .filter-form button {
+        padding: 6px 10px;
+        margin-right: 10px;
+        margin-bottom: 10px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 800px;
+    }
+
+    th, td {
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+        text-align: left;
+        vertical-align: middle;
+    }
+
+    th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+    }
+
+    .action-btn {
+        padding: 6px 12px;
+        border: none;
+        border-radius: 4px;
+        color: white;
+        cursor: pointer;
+    }
+
+    .btn-lock {
+        background-color: #3498db;
+        margin-right: 6px;
+    }
+
+    .btn-view {
+        background-color: #2ecc71; 
+        color: #fff;              
+        text-decoration: none;    
+        padding: 6px 12px;           
+    border-radius: 4px;        
+    display: inline-block;     
+        cursor: pointer;          
+    }
+
+    .btn-view:hover {
+        background-color: #27ae60; 
+    }
+
+    .no-data {
+        text-align: center;
+        padding: 20px;
+        font-style: italic;
+    }
+    .toggle-lock-btn {
+        padding: 8px 16px;             
+        font-size: 14px;               
+        font-weight: bold;              
+        border: 2px solid #2980b9;    
+        border-radius: 6px;          
+        background-color: #3498db;    
+        color: #fff;                 
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .toggle-lock-btn:hover {
+        background-color: #2980b9; 
+        border-color: #1c5980;
+        transform: scale(1.05);  
+    }
+
+</style>
+
+<div class="list-container">
+    
+    <form method="get" class="filter-form">
+        @Html.AntiForgeryToken()
+        @if(maDangNhap=="ADMINISTRATOR")
+        {
+            <select name="nganh">
+                <option value="">-- Tất cả ngành --</option>
+                <option value="ATPB" selected="@(nganh == "ATPB")">An toàn thông tin Phía Bắc</option>
+                <option value="ATPN" selected="@(nganh == "ATPN")">An toàn thông tin Phía Nam</option>
+                <option value="CNTT" selected="@(nganh == "CNTT")">Công nghệ thông tin</option>
+                <option value="DTVT" selected="@(nganh == "DTVT")">Điện tử vi mạch</option>
+            </select>
+
+            <input type="text" name="maNhapHoc" placeholder="Tìm theo Mã trúng tuyển" value="@maNhapHoc.ToUpper()" />
+        }
+        <select name="lockStatus">
+            <option value="">-- Tất cả trạng thái --</option>
+            <option value="locked" selected="@(lockstatus == "locked")">Đã khóa</option>
+            <option value="unlocked" selected="@(lockstatus == "unlocked")">Chưa khóa</option>
+        </select>
+
+        <button type="submit">🔍 Lọc</button>
+    </form>
+    
+    <table>
+        <thead>
+        <tr>
+            <th>Mã trúng tuyển</th>
+            <th>Họ tên</th>
+            <th>Ngày sinh</th>
+            <th>Ngành</th>
+            <th>Email</th>
+            <th>Trạng thái</th>
+            <th>Thao tác</th>
+        </tr>
+        </thead>
+        <tbody>
+        @if (list != null && list.Any())
+        {
+            foreach (var form in list)
+            {
+                <tr>
+                    <td>@form.MaNhapHoc</td>
+                    <td>@form.HoTen</td>
+                    <td>@form.NgaySinh.ToString("dd/MM/yyyy")</td>
+                    <td>@form.NganhDaoTao</td>
+                    <td>@form.Email</td>
+                    <td style="text-align: center;" class="status-col">@(form.IsLocked ? "Đã Khóa" : "Chưa Khóa")</td>
+                    <td style="text-align: center;">
+                        <button class="toggle-lock-btn btn btn-sm btn-warning btn-lock" data-id="@form.MaNhapHoc">
+                            @(form.IsLocked ? "Mở Khóa" : "Duyệt")
+                        </button>
+
+                        <a asp-action="XemChiTiet" asp-controller="Admin" asp-route-id="@form.MaNhapHoc"
+                           class="action-btn btn-view">👁️ Xem</a>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="7" class="no-data">Không có sinh viên nào.</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).on("click", ".toggle-lock-btn", function () {
+    const btn = $(this);
+    const userId = btn.data("id");
+
+    $.post('@Url.Action("ToggleLock", "Admin")', { id: userId }, function (res) {
+        if (res.success) {
+            // Đổi text nút
+            btn.text(res.locked ? "Mở Khóa" : "Duyệt");
+
+            // Tìm tới cột trạng thái trong cùng <tr>
+            const statusCol = btn.closest("tr").find(".status-col");
+            statusCol.text(res.locked ? "Đã Khóa" : "Chưa Khóa");
+
+        }
+    });
+});
+
+</script>

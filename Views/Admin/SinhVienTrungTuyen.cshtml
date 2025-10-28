@@ -1,0 +1,155 @@
+﻿@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Gửi thông báo nhập học";
+    var initUserForms = ViewBag.InitUserForms as List<hehehe.Models.InitUserForm>;
+    var user = ViewBag.User;
+}
+
+<style>
+    .list-container {
+        width: 85%;
+        height: 70vh;
+        margin: 40px auto;
+        background-color: #ffffff;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        padding: 20px 30px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        overflow: auto;
+    }
+
+    .heading {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+        vertical-align: middle;
+    }
+
+    th {
+        background-color: #f8f9fa;
+        font-weight: bold;
+    }
+
+    .btn-sm {
+        padding: 5px 10px;
+    }
+
+    .alert {
+        margin-bottom: 20px;
+    }
+
+    /* spinner */
+    .spinner {
+        display: none;
+        margin-left: 10px;
+    }
+</style>
+
+
+<div class="list-container">
+    
+    <div class="tempData">
+        @if (TempData["Success"] != null)
+        {
+            <div  style="background-color: #dff0d8; color: #3c763d; padding: 10px; margin-bottom: 15px; border-radius: 4px;">@TempData["Success"]</div>
+        }
+        @if (TempData["Error"] != null)
+        {
+            <div  style="background-color: #dff0d8; color: #3c763d; padding: 10px; margin-bottom: 15px; border-radius: 4px;">@TempData["Error"]</div>
+        }
+        @if (TempData["LogFile"] != null)
+        {
+            <div  style="background-color: #dff0d8; color: #3c763d; padding: 10px; margin-bottom: 15px; border-radius: 4px;">
+                Quá trình gửi mail hoàn tất. 
+                <a href="@TempData["LogFile"]" download>Tải log tại đây</a>
+            </div>
+        }
+    </div>
+    
+    <!-- Heading -->
+    <div class="heading">
+        <h3>Danh sách sinh viên nhập học</h3>
+        <form asp-action="SendPassNotiEmailAutomatically" method="post" onsubmit="showSpinner()">
+            @Html.AntiForgeryToken()
+            <button type="submit" class="btn btn-danger">
+                <i class="bi bi-send"></i> Gửi đồng loạt
+            </button>
+            <div class="spinner spinner-border text-danger" role="status" id="loadingSpinner">
+                <span class="visually-hidden">Đang gửi...</span>
+            </div>
+        </form>
+    </div>
+    
+    <!-- Bảng danh sách -->
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>Mã nhập học</th>
+                <th>Họ tên</th>
+                <th>Email</th>
+                <th>Ngành đào tạo</th>
+                <th>Thao tác</th>
+            </tr>
+            </thead>
+            <tbody>
+            @if (initUserForms != null && initUserForms.Any())
+            {
+                foreach (var item in initUserForms)
+                {
+                    <tr>
+                        <td>@item.MaNhapHoc</td>
+                        <td>@item.HoTen</td>
+                        <td>@item.Email</td>
+                        <td>@item.NganhDaoTao</td>
+                        
+                        @if (!item.IsSentPassNotiEmail)
+                        {
+                            <td>
+                                <form asp-action="SendPassNotiEmailSiglely" method="post" class="d-inline">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="maNhapHoc" value="@item.MaNhapHoc" />
+                                    <button type="submit" class="btn btn-primary btn-sm">
+                                        <i class="bi bi-envelope"></i> Gửi Email
+                                    </button>
+                                </form>
+                            </td>
+                        }
+                        else
+                        {
+                            <td>Đã gửi Email tới người dùng</td>
+                        }
+
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="5" class="text-center text-muted">Không có sinh viên nào.</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    function showSpinner() {
+        document.getElementById("loadingSpinner").style.display = "inline-block";
+    }
+</script>
+
+<!-- Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" />

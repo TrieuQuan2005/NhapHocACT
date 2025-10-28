@@ -1,0 +1,157 @@
+﻿@{
+    Layout = "_layout";
+    ViewData["Title"] = "Trang quản trị";
+
+    var IsConfirmedUserForm = ViewBag.IsConfirmedUserForm as List<hehehe.Models.UserForm>;
+    var filter = Context.Request.Query["filter"].ToString();
+}
+
+<style>
+    .list-container {
+        width: 85%;
+        margin: 40px auto;
+        background-color: #ffffff;
+        border: 1px solid #ccc;
+        border-radius: 12px;
+        padding: 20px 30px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        overflow: auto;
+        min-height: 60vh;
+    }
+
+    .filter-form select,
+    .filter-form button {
+        padding: 6px 10px;
+        font-size: 14px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 900px;
+    }
+
+    th, td {
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    th {
+        background-color: #f7f7f7;
+        font-weight: bold;
+    }
+
+    table tr:hover {
+        background-color: #fafafa;
+    }
+
+    .no-data {
+        text-align: center;
+        padding: 20px;
+        font-style: italic;
+        color: #888;
+    }
+
+    .SendEmailBtn {
+        padding: 6px 12px;
+        font-size: 14px;
+        border-radius: 6px;
+        border: none;
+        background-color: #3498db;
+        color: white;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .SendEmailBtn:hover {
+        background-color: #2980b9;
+        transform: scale(1.05);
+    }
+
+    
+</style>
+
+<div class="list-container">
+
+    <table>
+        <thead>
+        <tr>
+            <th>Mã trúng tuyển</th>
+            <th>Họ tên</th>
+            <th>Ngày sinh</th>
+            <th>Ngành</th>
+            <th>Email</th>
+            <th>Trạng thái</th>
+            <th>Thao tác</th>
+        </tr>
+        </thead>
+        <tbody>
+        @if (IsConfirmedUserForm != null)
+        {
+            foreach (var form in IsConfirmedUserForm)
+            {
+                <tr>
+                    <td>@form.MaNhapHoc</td>
+                    <td>@form.HoTen</td>
+                    <td>@form.NgaySinh.ToString("dd/MM/yyyy")</td>
+                    <td>@form.NganhDaoTao</td>
+                    <td>@form.Email</td>
+                    <td class="status-col @(form.isSentEmail ? "success" : "pending")">
+                        @(form.isSentEmail ? "Đã gửi mail xác nhận" : "Chưa gửi mail xác nhận")
+                    </td>
+                    <td>
+                        @if (!form.isSentEmail)
+                        {
+                            <button class="SendEmailBtn" data-id="@form.MaNhapHoc">Gửi Email</button>
+                        }
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="7" class="no-data">Không có sinh viên nào.</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).on("click", ".SendEmailBtn", function () {
+    const btn = $(this);
+    const userId = btn.data("id");
+
+    btn.prop("disabled", true).text("Đang gửi...");
+
+    $.ajax({
+        url: '@Url.Action("SendSucessEmail", "Admin")',
+        type: "POST",
+        data: { maNhapHoc: userId },
+        headers: {
+            'RequestVerificationToken': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (res) {
+            if (res.success) {
+                // Cập nhật trạng thái
+                btn.closest("tr").find(".status-col")
+                   .removeClass("pending")
+                   .addClass("success")
+                   .text("Đã gửi mail xác nhận ✅");
+                btn.remove();
+            } else {
+                alert(res.message || "Không thể gửi email.");
+                btn.prop("disabled", false).text("Gửi Email");
+            }
+        },
+        error: function () {
+            alert("Có lỗi xảy ra khi gửi yêu cầu.");
+            btn.prop("disabled", false).text("Gửi Email");
+        }
+    });
+});
+</script>

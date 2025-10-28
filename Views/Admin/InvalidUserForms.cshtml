@@ -1,0 +1,111 @@
+﻿@{
+    Layout = "_Layout";
+    var invalidUsers = ViewBag.InvalidUserForms as List<hehehe.Models.InitUserForm>;
+}
+<style>
+    .list-container {
+        width: 80%;
+        height: 60vh;
+        margin: 40px auto;
+        background-color: #ffffff;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        padding: 20px 30px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        overflow: auto;
+    }
+    
+    .filter-form select,
+    .filter-form input,
+    .filter-form button {
+        padding: 6px 10px;
+        margin-right: 10px;
+        margin-bottom: 10px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 800px;
+    }
+
+    th, td {
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+        text-align: left;
+        vertical-align: middle;
+    }
+
+    th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+    }
+    
+
+</style>
+
+<div class="list-container">
+    <h5 class="mb-0">📌 Danh sách sinh viên chưa nộp hồ sơ</h5>
+    <div class="card-body">
+
+        @if (TempData["Success"] != null)
+        {
+            <div  style="background-color: #dff0d8; color: #3c763d; padding: 10px; margin-bottom: 15px; border-radius: 4px;">
+                @TempData["Success"]
+            </div>
+        }
+        @if (TempData["Error"] != null)
+        {
+            <div  style="background-color: #dff0d8; color: #3c763d; padding: 10px; margin-bottom: 15px; border-radius: 4px;">
+                @TempData["Error"]
+            </div>
+        }
+
+        <div class="table-wrapper">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Mã nhập học</th>
+                            <th>Họ tên</th>
+                            <th>Email</th>
+                            <th>Ngành</th>
+                            <th class="text-center">Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (invalidUsers.Any())
+                        {
+                            foreach (var user in invalidUsers)
+                            {
+                                <tr>
+                                    <td class="fw-bold">@user.MaNhapHoc</td>
+                                    <td>@user.HoTen</td>
+                                    <td>@user.Email</td>
+                                    <td>@user.NganhDaoTao</td>
+                                    <td class="text-center">
+                                        <form asp-action="SendAlertEmail" method="post" class="d-inline">
+                                            @Html.AntiForgeryToken()
+                                            <input type="hidden" name="maNhapHoc" value="@user.MaNhapHoc" />
+                                            <button type="submit" class="btn btn-sm btn-warning">
+                                                📧 Gửi nhắc nhở
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="5" class="text-center text-muted">
+                                    ✅ Tất cả sinh viên đã nộp hồ sơ
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

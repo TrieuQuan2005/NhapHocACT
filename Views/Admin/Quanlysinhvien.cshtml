@@ -1,0 +1,122 @@
+﻿@model hehehe.Models.ViewModels.Quanlysinhvien
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Quản lý người dùng";
+}
+
+<style>
+    body {
+        font-family: "Times New Roman", Times, serif;
+    }
+    .user-container {
+        width: 80%;
+        height: 70vh;
+        margin: 30px auto;
+        background: #ffffff;
+        padding: 25px 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    .user-container h3 {
+        font-weight: bold;
+        margin-bottom: 25px;
+        text-align: center;
+        color: #2c3e50;
+    }
+    table.user-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 16px;
+    }
+    table.user-table th, table.user-table td {
+        border: 1px solid #ccc;
+        padding: 12px 15px;
+        text-align: left;
+    }
+    table.user-table th {
+        background: #f5f5f5;
+        width: 220px;
+    }
+    table.user-table tr:nth-child(even) {
+        background: #fafafa;
+    }
+    .btn-reset {
+        margin-top: 20px;
+        display: block;
+        background: #ffc107;
+        color: #000;
+        font-weight: bold;
+        border: none;
+        padding: 10px 18px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+    .btn-reset:hover {
+        background: #e0a800;
+    }
+</style>
+
+<div class="user-container">
+    <h3>🔎 Quản lý sinh viên</h3>
+
+    <!-- Form tìm kiếm -->
+    <form asp-action="Quanlysinhvien" method="post" class="mb-4">
+        <div class="input-group mb-3">
+            <input type="text" name="maNhapHoc" class="form-control" placeholder="Nhập mã nhập học..." required />
+            <button type="submit" class="btn btn-primary">Tìm</button>
+        </div>
+    </form>
+
+    <!-- Thông báo -->
+    @if (ViewBag.Error != null)
+    {
+        <div class="alert alert-danger">@ViewBag.Error</div>
+    }
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">@TempData["Error"]</div>
+    }
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">@TempData["Success"]</div>
+    }
+
+    <!-- Bảng thông tin sinh viên -->
+    @if (Model != null)
+    {
+        <table class="user-table">
+            <tr>
+                <th>Mã nhập học</th>
+                <td>@Model.MaNhapHoc</td>
+            </tr>
+            <tr>
+                <th>Gmail</th>
+                <td>@Model.Email</td>
+            </tr>
+            <tr>
+                <th>Số CCCD</th>
+                <td>@Model.Cccd</td>
+            </tr>
+            <tr>
+                <th>Số điện thoại</th>
+                <td>@Model.SoDienThoai</td>
+            </tr>
+            <tr>
+                <th>Ngành đào tạo</th>
+                <td>@Model.NganhDaoTao</td>
+            </tr>
+            <tr>
+                <th>Mật khẩu</th>
+                <td><code>@Model.Password</code></td>
+            </tr>
+        </table>
+
+        <!-- Nút reset mật khẩu -->
+        <form asp-action="ResetMatKhau" method="post">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="maNhapHoc" value="@Model.MaNhapHoc" />
+            <button type="submit" class="btn-reset">🔑 Reset mật khẩu về mặc định</button>
+        </form>
+    }
+</div>

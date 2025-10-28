@@ -1,0 +1,94 @@
+﻿@model hehehe.Models.UserForm
+@{
+ViewData["Title"] = "Nhập học thành công";
+Layout = null;
+var avatar = ViewBag.AvatarPath as string ?? "/images/default-avatar.png";
+}
+
+<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
+<title>Nhập học thành công</title>
+<style>
+    body {
+        font-family: 'Roboto', sans-serif;
+        background: linear-gradient(to bottom, #e74c3c, #f9ebea);
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        max-width: 700px;
+        margin: 60px auto;
+        background: white;
+        padding: 40px;
+        border-radius: 10px;
+        text-align: center;
+        box-shadow: 0 0 12px rgba(0,0,0,0.15);
+    }
+
+    .avatar {
+        width: 160px;
+        height: 160px;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 4px solid #4caf50;
+        margin-bottom: 20px;
+    }
+
+    .info {
+        font-size: 18px;
+        margin: 10px 0;
+        color: #333;
+    }
+
+    .success-message {
+        font-size: 22px;
+        color: #2e7d32;
+        font-weight: bold;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    .btn-back {
+        display: inline-block;
+        margin-top: 40px;
+        padding: 10px 20px;
+        font-size: 16px;
+        background: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        text-decoration: none;
+        : background 0.3s;
+    }
+
+    .btn-back:hover {
+        background: #388e3c;
+    }
+    .btn-logout{
+        display: inline-block;
+        margin-top: 10px;
+        padding: 10px 20px;
+        font-size: 16px;
+        background: #af4c58;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        text-decoration: none;
+        : background 0.3s;
+    }
+    .btn-logout:hover {
+        background: #d60f25;
+    }
+</style>
+
+<div class="container">
+    <div class="success-message">🎉 Chúc mừng bạn đã hoàn tất quá trình nhập học trực tuyến !</div>
+    <img src="@avatar" alt="Ảnh sinh viên" class="avatar"/>
+    <div class="info"><strong>👤 Họ tên:</strong> @Model.HoTen</div>
+    <div class="info"><strong>🎂 Năm sinh:</strong> @Model.NgaySinh.ToString("yyyy")</div>
+    <div class="info"><strong>📚 Ngành học:</strong> @Model.NganhDaoTao</div>
+    <div class="success-message">Hệ thống sẽ xác thực thông tin của bạn, bạn hãy thường xuyên kiểm tra trên hệ thống để cập nhật thông tin nhé !</div>
+    <div><a class="btn-back" href="/Form/FormNhapThongTin">Quay lại Form</a></div>
+    <div><a href="@Url.Action("Logout", "Auth")" class="btn-logout">Đăng Xuất</a></div>
+</div>
+

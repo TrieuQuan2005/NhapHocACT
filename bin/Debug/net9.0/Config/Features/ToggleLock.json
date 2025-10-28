@@ -1,0 +1,8 @@
+﻿{
+  "SuccessMessage": "Cập nhật trạng thái khóa thành công",
+  "ErrorMessage": "Không thể thay đổi trạng thái người dùng",
+  "Labels": {
+    "Locked": "Đang bị khóa",
+    "Unlocked": "Đang mở"
+  }
+}
